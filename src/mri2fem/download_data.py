@@ -35,16 +35,15 @@ def add_arguments(parser):
 
 def main(output: Path = Path("mri2fem-dataset.tar.gz")) -> None:
     logger = logging.getLogger(__name__)
-    path = Path(output)
+    path = Path(output).resolve().with_suffix(".tar.gz")
+
     link = " https://zenodo.org/record/4899120/files/mri2fem-dataset.tar.gz?download=1"
 
     logger.info("Downloading MRI2FEM dataset to %s", path)
     download(path=path, link=link)
 
-    folder = path.parent / path.name.split(".")[0]
-    if folder.exists():
-        logger.info("Folder %s already exists", folder)
-    else:
-        logger.info("Extracting %s to %s", path, folder)
-        with tarfile.open(path, "r:gz") as tar:
-            tar.extractall()
+    folder = path.parent
+    logger.info("Extracting %s to %s", path, folder)
+    with tarfile.open(path, "r:gz") as tar:
+        tar.extractall(folder)
+    path.unlink()
