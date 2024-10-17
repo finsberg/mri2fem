@@ -1,0 +1,43 @@
+name: Run chapters
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+
+  run:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v1
+        with:
+          generate-run-shell: true
+          environment-file: environment.yml
+          # only cache environment
+          cache-environment: true
+          cache-downloads: false
+
+      - name: Install dependencies
+        shell: bash -l {0}
+        run: |
+          python3 -m pip install .
+
+      - name: Some tests
+        shell: bash -l {0}
+        run:
+          python3 -m mri2fem --help
+
+      - name: Download data
+        shell: bash -l {0}
+        run:
+          python3 -m mri2fem download-data
+
+      - name: Run chapter 3
+        shell: bash -l {0}
+        run:
+          python3 scripts/chapter3.py

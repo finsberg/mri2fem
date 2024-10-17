@@ -1,0 +1,12 @@
+name: mri2fem
+channels:
+  - conda-forge
+dependencies:
+  - fenics-dolfin
+  - svmtk
+  - python>=3.10
+  - meshio
+  - matplotlib
+  - ipython
+  - requests
+  - tqdm
