@@ -35,9 +35,9 @@ jobs:
       - name: Download data
         shell: bash -l {0}
         run:
-          python3 -m mri2fem download-data
+          python3 reproduce-book/download_data.py
 
       - name: Run chapter 3
         shell: bash -l {0}
         run:
-          python3 scripts/chapter3.py
+          python3 reproduce-book/chapter3_svmtk_fenics.py

@@ -6,6 +6,7 @@ import requests
 from tqdm import tqdm
 
 here = Path(__file__).absolute().parent
+logger = logging.getLogger(__name__)
 
 
 def download(path, link, desc=None):
@@ -33,13 +34,20 @@ def add_arguments(parser):
     )
 
 
-def main(output: Path = Path("mri2fem-dataset.tar.gz")) -> None:
-    logger = logging.getLogger(__name__)
-    path = Path(output).resolve().with_suffix(".tar.gz")
+def download_extra_data(output: Path = Path("data.tar.gz")) -> None:
+    link = "https://drive.google.com//uc?id=1o62s4K7-ucVDAq0rxt9hAsSgtWrfSdZ0&export=download"
+    logger.info("Downloading extra data to %s", output)
+    main(output, link)
 
+
+def download_mri2fem_dataset(output: Path = Path("mri2fem-dataset.tar.gz")) -> None:
     link = " https://zenodo.org/record/4899120/files/mri2fem-dataset.tar.gz?download=1"
+    logger.info("Downloading MRI2FEM dataset to %s", output)
+    main(output, link)
 
-    logger.info("Downloading MRI2FEM dataset to %s", path)
+
+def main(output: Path, link: str) -> None:
+    path = Path(output).resolve().with_suffix(".tar.gz")
     download(path=path, link=link)
 
     folder = path.parent
