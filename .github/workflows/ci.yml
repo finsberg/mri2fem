@@ -17,7 +17,7 @@ jobs:
       - uses: mamba-org/setup-micromamba@v1
         with:
           generate-run-shell: true
-          environment-file: environment.yml
+          environment-file: conda-env/svmtk_fenics.yml
           # only cache environment
           cache-environment: true
           cache-downloads: false
