@@ -41,3 +41,8 @@ jobs:
         shell: bash -l {0}
         run:
           python3 reproduce-book/chapter3_svmtk_fenics.py
+
+      - name: Run chapter 4
+        shell: bash -l {0}
+        run:
+          python3 reproduce-book/chapter4_svmtk_fenics.py

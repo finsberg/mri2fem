@@ -1,7 +1,14 @@
 import argparse
 import typing
 
-from . import surface_to_mesh, remesh_surface, smooth_surface, repair, create_gw_mesh
+from . import (
+    surface_to_mesh,
+    remesh_surface,
+    smooth_surface,
+    repair,
+    create_gw_mesh,
+    create_brain_mesh,
+)
 
 __all__ = [
     "add_svmtk_parser",
@@ -41,6 +48,12 @@ def add_svmtk_parser(parser: argparse.ArgumentParser) -> None:
     )
     create_gw_mesh.add_arguments(create_gw_mesh_parser)
 
+    # create-brain-mesh parser
+    create_brain_mesh_parser = subparsers.add_parser(
+        "create-brain-mesh", help="Create a mesh for brain"
+    )
+    create_brain_mesh.add_arguments(create_brain_mesh_parser)
+
 
 def dispatch(command, args: dict[str, typing.Any]) -> int:
     if command == "surface-to-mesh":
@@ -57,6 +70,9 @@ def dispatch(command, args: dict[str, typing.Any]) -> int:
 
     elif command == "create-gw-mesh":
         create_gw_mesh.main(**args)
+
+    elif command == "create-brain-mesh":
+        create_brain_mesh.main(**args)
 
     else:
         raise ValueError(f"Unknown command {command}")

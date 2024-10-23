@@ -49,7 +49,7 @@ def check_docker(image_name: str) -> bool:
         return False
     ret = subprocess.run([docker, "images", "-q", image_name], capture_output=True)
     if ret.returncode != 0 or ret.stdout == b"":
-        print(f"Docker image {image_name} not found")
+        logger.warning(f"Docker image {image_name} not found")
         return False
     return True
 
@@ -59,11 +59,11 @@ def main(): ...
 
 def run(
     args: list[str],
-    SUBJECTS_DIR,
-    RESULTS_DIR,
+    RESULTS_DIR=Path.cwd(),
+    SUBJECTS_DIR=Path.cwd(),
     entrypoint: str = "/bin/bash",
     LICESENS_DIR=Path.home() / ".freesurfer",
-    image_name="freesurfer:latest",
+    image_name="freesurfer2:latest",
 ):
     # Check first if the entrypoint exist as a command
     if shutil.which(entrypoint) is not None:
