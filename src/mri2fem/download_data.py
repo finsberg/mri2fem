@@ -25,7 +25,7 @@ def download(path, link, desc=None, params=None):
             handle.write(data)
     progress_bar.close()
 
-    folder = path.parent
+    folder = path.resolve().parent
     logger.info("Extracting %s to %s", path, folder)
     with tarfile.open(path, "r:gz") as tar:
         tar.extractall(folder)

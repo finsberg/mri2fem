@@ -1,28 +1,46 @@
 # mri2fem
 
-
-
 Original repostiory is found at https://github.com/kent-and/mri2fem. This repository is a fork of the original repository where we have made the code into an installable package with the command `mri2fem`.
 We have also added a CI to ensure the code is working.
 
 Source code for the command line tool `mri2fem` is found in the folder `src`, while the scripts to reproduce for each chapter in the book is found in the folder `reproduce-book`.
 
+The `mri2fem` command has several subcommands
+
 ```
 $ mri2fem --help
-usage: mri2fem [-h] [--dry-run] [-v] {download-data,surface-to-mesh,remesh-surface,smooth-surface,repair} ...
+usage: __main__.py [-h] [--dry-run] [-v] {download-data,svmtk,freesurfer} ...
 
 positional arguments:
-  {download-data,surface-to-mesh,remesh-surface,smooth-surface,repair}
+  {download-data,svmtk,freesurfer}
     download-data       Download the sample data
-    surface-to-mesh     Convert a surface to a mesh
-    remesh-surface      Remesh a surface
-    smooth-surface      Smooth a surface
-    repair              Repair a surface
+    svmtk               Surface and volume meshing toolkit
+    freesurfer          Run freesurfer
 
 options:
   -h, --help            show this help message and exit
   --dry-run             Just print the command and do not run it (default: False)
   -v, --verbose         Print more information (default: False)
+```
+
+and some of these subcommands have their own subcommands. For example, the `svmtk` subcommand has the following subcommands
+
+```
+$ mri2fem svmtk --help
+
+usage: mri2fem svmtk [-h] {surface-to-mesh,remesh-surface,smooth-surface,repair,create-gw-mesh,create-brain-mesh} ...
+
+positional arguments:
+  {surface-to-mesh,remesh-surface,smooth-surface,repair,create-gw-mesh,create-brain-mesh}
+    surface-to-mesh     Convert a surface to a mesh
+    remesh-surface      Remesh a surface
+    smooth-surface      Smooth a surface
+    repair              Repair a surface
+    create-gw-mesh      Create a mesh for groundwater flow
+    create-brain-mesh   Create a mesh for brain
+
+options:
+  -h, --help            show this help message and exit
 ```
 
 
